@@ -16,11 +16,10 @@ RUN apt-get update \
 #       for latest version, build from source
 # For developers build behind GFW: sorry, qemu has some git submodules,
 #        mirror to be found, so that they are still super slow.
-ARG qemu_repo
 RUN sudo apt-get install -y pkg-config libglib2.0-dev libpixman-1-dev \
     && apt-get clean \
     && git config --global http.postBuffer 524288000 \
-    && git clone --depth 1 $qemu_repo \
+    && git clone --depth 1 https://git.qemu.org/git/qemu.git \
     && cd qemu \
     && ./configure \
     && sudo make install -j2 \
