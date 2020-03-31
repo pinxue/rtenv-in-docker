@@ -26,7 +26,12 @@ RUN sudo apt-get install -y pkg-config libglib2.0-dev libpixman-1-dev \
     && sudo make install -j2 \
     && cd .. && sudo rm -rf qemu
 
-ADD gcc/gcc-arm-none-eabi-5_4-2016q3-20160926-linux.tar.bz2 /opt/gcc
+RUN mkdir /opt/gcc \
+    && wget -c https://developer.arm.com/-/media/Files/downloads/gnu-rm/5_4-2016q3/gcc-arm-none-eabi-5_4-2016q3-20160926-linux.tar.bz2 \
+    && tar jxf gcc-arm-none-eabi-5_4-2016q3-20160926-linux.tar.bz2 \
+    && rm -f gcc-arm-none-eabi-5_4-2016q3-20160926-linux.tar.bz2
+# Keep for local build test
+# ADD gcc/gcc-arm-none-eabi-5_4-2016q3-20160926-linux.tar.bz2 /opt/gcc
 
 RUN useradd -m -g root -G sudo -p rtt  rtt  && echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 WORKDIR /home/rtt
