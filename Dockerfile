@@ -11,6 +11,9 @@ RUN apt-get update \
          lsb-core \
     && apt-get clean
 
+# ARG doesn't work well with autobuild, workaround need help from a build hook
+# https://github.com/docker/hub-feedback/issues/508#issuecomment-491712592
+ARG qemu_repo
 # RUN apt-get install -y qemu-system-arm qemuctl qemu-utils
 # Note: qemu in apt repo is 2.11, easy to install but quite old 
 #       for latest version, build from source
@@ -19,13 +22,13 @@ RUN apt-get update \
 RUN sudo apt-get install -y pkg-config libglib2.0-dev libpixman-1-dev \
     && apt-get clean \
     && git config --global http.postBuffer 524288000 \
-    && git clone --depth 1 https://git.qemu.org/git/qemu.git \
+    && git clone --depth 1 $qemu_repo 
     && cd qemu \
     && ./configure \
     && sudo make install -j2 \
     && cd .. && sudo rm -rf qemu
 
-RUN mkdir /opt/gcc \
+RUN mkdir /opt/gcc && cd /opt/gcc \
     && wget -c https://developer.arm.com/-/media/Files/downloads/gnu-rm/5_4-2016q3/gcc-arm-none-eabi-5_4-2016q3-20160926-linux.tar.bz2 \
     && tar jxf gcc-arm-none-eabi-5_4-2016q3-20160926-linux.tar.bz2 \
     && rm -f gcc-arm-none-eabi-5_4-2016q3-20160926-linux.tar.bz2
