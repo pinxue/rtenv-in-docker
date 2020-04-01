@@ -22,7 +22,7 @@ ARG qemu_repo
 RUN sudo apt-get install -y pkg-config libglib2.0-dev libpixman-1-dev \
     && apt-get clean \
     && git config --global http.postBuffer 524288000 \
-    && git clone --depth 1 $qemu_repo 
+    && git clone --depth 1 $qemu_repo \
     && cd qemu \
     && ./configure \
     && sudo make install -j2 \
