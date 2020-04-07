@@ -9,6 +9,7 @@ RUN apt-get update \
          wget bzip2 make vim git ca-certificates  sudo \
          scons clang clang-tools gdb gcc-multilib g++-multilib \
          lsb-core \
+         python-requests ncurses-dev \
     && apt-get clean
 
 # ARG doesn't work well with autobuild, workaround need help from a build hook
@@ -45,7 +46,9 @@ EXPOSE 8181
 USER rtt
 
 ADD ./scripts/* /home/rtt/
-# According above and scons --menuconfig will install env into rtt home,
-#    don't borther to add RT-Thread env tools.
-# RUN git clone https://github.com/RT-Thread/env .env/tools/scripts
-# Keep for your reference.
+# scons --menuconfig will install env into rtt home,
+# prefetch to avoid cloning everytime
+RUN mkdir -p .env/tools && git clone https://github.com/RT-Thread/env .env/tools/scripts \
+    && echo 'export PATH=~/.env/tools/scripts:$PATH' > ~/.env/env.sh \
+    && mkdir -p .env/packages && git clone https://github.com/RT-Thread/packages .env/packages/packages \
+    && echo 'source /home/rtt/.env/packages/packages/Kconfig' > ~/.env/packages/Kconfig
