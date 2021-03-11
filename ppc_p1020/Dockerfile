@@ -1,4 +1,4 @@
-FROM pinxue/rtenv_base:v1.0
+FROM pinxue/rtenv:base
 MAINTAINER Wu Yang <yangwu@rt-thread.com>
 
 # NXP QorIQ Toolchain: https://nxp.flexnetoperations.com/control/frse/product?entitlementId=585148727&lineNum=1

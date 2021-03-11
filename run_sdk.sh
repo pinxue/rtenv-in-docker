@@ -13,5 +13,5 @@ echo
 docker run --name rtenv --rm -it --privileged -p 8181:8181 \
   -v `pwd`:/home/rtt/rt-thread \
   $2 $3 $4 $5 $6 $7 $8 $9 \
-  pinxue/rtenv_$1:v1.0\
+  pinxue/rtenv:$1\
   bash
