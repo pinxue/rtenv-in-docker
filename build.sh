@@ -14,4 +14,4 @@ else
   qemu_url=$qemu_official
   cp sources.list.origin sources.list
 fi
-docker build --rm --build-arg qemu_repo=$qemu_url . -t pinxue/rtenv:clang6_opt_gcc
+docker build --rm --build-arg qemu_repo=$qemu_url . -t pinxue/rtenv_base:v1.0
